@@ -5,6 +5,7 @@ function statement(invoice, plays){
   let volumeCredit = 0;
   let result = `청구 내역 (고객 명: ${invoice.customer})\n`;
   const format = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2}).format;
+
   for(let perf of invoice.performances){
     const play = plays[perf.playID];
     let thisAmount = 0;
@@ -26,7 +27,7 @@ function statement(invoice, plays){
         throw new Error(`알수 없는 장르: ${play.type}`)
     }
 
-    volumeCredit += Math.max(perf.audience, 0);
+    volumeCredit += Math.max(perf.audience - 30, 0);
     if('comedy' === play.type) volumeCredit += Math.floor(perf.audience / 5);
 
     result += `${play.name}: ${format(thisAmount / 100)} (${perf.audience}석)\n`;
@@ -37,7 +38,4 @@ function statement(invoice, plays){
   result += `적립 포인트: ${volumeCredit}점\n`;
   return result;
 }
-
-console.log(statement(invoices, plays))
-
-module.exports = statement(invoices, plays)
+module.exports = { statement }
