@@ -76,35 +76,35 @@ function createStatementData(invoice, plays){
     return plays[aPerformance.playID]
   }
 
-  function amountFor(aPerformance){
-    let result = 0;
-    switch(aPerformance.play.type){
-      case "tragedy":
-        result = 40000;
-        if(aPerformance.audience > 30){
-          result += 1000 * (aPerformance.audience - 30);
-        }
-        break;
-      case "comedy":
-        result = 30000;
-        if(aPerformance.audience > 20){
-          result += 10000 + 500 * (aPerformance.audience - 20);
-        }
-        result += 300 * aPerformance.audience;
-        break;
-      default:
-        throw new Error(`알수 없는 장르: ${aPerformance.play.type}`)
-    }
+  // function amountFor(aPerformance){
+  //   let result = 0;
+  //   switch(aPerformance.play.type){
+  //     case "tragedy":
+  //       result = 40000;
+  //       if(aPerformance.audience > 30){
+  //         result += 1000 * (aPerformance.audience - 30);
+  //       }
+  //       break;
+  //     case "comedy":
+  //       result = 30000;
+  //       if(aPerformance.audience > 20){
+  //         result += 10000 + 500 * (aPerformance.audience - 20);
+  //       }
+  //       result += 300 * aPerformance.audience;
+  //       break;
+  //     default:
+  //       throw new Error(`알수 없는 장르: ${aPerformance.play.type}`)
+  //   }
+  //
+  //   return result;
+  // }
 
-    return result;
-  }
-
-  function volumeCreditFor(aPerformance){
-    let result = 0;
-    result += Math.max(aPerformance.audience - 30, 0);
-    if('comedy' === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5);
-    return result
-  }
+  // function volumeCreditFor(aPerformance){
+  //   let result = 0;
+  //   result += Math.max(aPerformance.audience - 30, 0);
+  //   if('comedy' === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5);
+  //   return result
+  // }
 
   function totalAmount(data){
     return data.performances.reduce((total, p) => total + p.amount, 0);
@@ -135,4 +135,4 @@ function renderPlainText(data){
 }
 
 
-console.log(rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)))
+console.log('original and refactoring statement is', rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)) ? 'same' : 'different')

@@ -89,4 +89,4 @@ function renderPlainText(data){
 }
 
 
-console.log(rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)))
+console.log('original and refactoring statement is', rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)) ? 'same' : 'different')

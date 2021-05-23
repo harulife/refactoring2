@@ -74,4 +74,4 @@ function statement(invoice, plays){
   }
 }
 
-console.log(rawStatement(invoices, plays) === statement(invoices, plays))
+console.log('original and refactoring statement is', rawStatement(invoices, plays) === statement(invoices, plays) ? 'same' : 'different')

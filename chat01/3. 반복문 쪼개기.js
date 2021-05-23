@@ -7,7 +7,7 @@ const { statement: rawStatement } = require('./0. raw');
  * 반복문 쪼개기
  * 이 리펙토링은 성능과 밀첩한 관계가 생기게된다.
  * 하나의 순회 과정을 쪼개어 여러 순회 과정으로 중복하게 되면 성능에 영향을 미치는건 사실이다.
- * 하지만 리펙토링에 대한 성능이슈는 체감상 많은 성능이슈를 주지않은 경우도 많을 뿐더러 만약 성능이 크게 떨어졌다면 리펙토링후 성능 개션을 진행하면 된다.
+ * 하지만 리펙토링에 대한 성능이슈는 체감상 많은 성능이슈를 주지않은 경우도 많을 뿐더러 만약 성능이 크게 떨어졌다면 리펙토링후 성능 개선을 진행하면 된다.
  * 결론적으로 "특별한 경우가 아니라면 성능 이슈, 일단 무시하라" 라는 조언
  *
  * */
@@ -79,4 +79,4 @@ function statement(invoice, plays){
   return result;
 }
 
-console.log(rawStatement(invoices, plays) === statement(invoices, plays))
+console.log('original and refactoring statement is', rawStatement(invoices, plays) === statement(invoices, plays) ? 'same' : 'different')

@@ -30,7 +30,6 @@ function statement(invoice, plays){
    * play 라는 임시변수를 playFor 질의 함수로 변경후 함수를 참조하도록 코드를 변경한다.
    * 마찬가지로 amountFor 함수의 결과값으로 할당받은 thisAmount 변수도 인라인 적용을 한다.
    * 이러한 지역 변수를 제거함으로써 얻는 장점은 추출 작업이 쉬어진다는 것이다.
-   *
    * */
   function playFor(aPerformance){
     return plays[aPerformance.playID]
@@ -67,4 +66,4 @@ function statement(invoice, plays){
   }
 }
 
-console.log(rawStatement(invoices, plays) === statement(invoices, plays))
+console.log('original and refactoring statement is', rawStatement(invoices, plays) === statement(invoices, plays) ? 'same' : 'different')
