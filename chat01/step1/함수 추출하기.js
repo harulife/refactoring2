@@ -1,6 +1,15 @@
-const plays = require('./plays.json');
-const invoices = require('./invoices.json');
-const { statement: rawStatement } = require('./0. raw');
+const plays = require('../plays.json');
+const invoices = require('../invoices.json');
+
+
+/**
+ * 함수 추출하기
+ * 추출하기에 용이한 부분은 전체를 각각의 부분으로 나누는 부분을 찾아본다.
+ * switch 와 같은 조건문은 조건에 따른 수행코드가 다를뿐더러 조건의 수가 유동적이기에 추출하기에 적합한 구문이다.
+ * 함수로 만들때 함수가 수행하는 일을 함수명으로 명시한다.
+ * 함수의 반환값을 정의하는 변수명을 result로 통일하여 쉽게 해당 변수의 역할을 알수 있게 하자.
+ * 변수명을 지을때 부정관사(a/an)을 뢀용하자.
+ */
 
 function statement(invoice, plays){
   let totalAmount = 0;
@@ -42,14 +51,6 @@ function statement(invoice, plays){
   result += `적립 포인트: ${volumeCredit}점\n`;
   return result;
 
-  /**
-   * 함수 추출하기
-   * 추출하기에 용이한 부분은 전체를 각각의 부분으로 나누는 부분을 찾아본다.
-   * switch 와 같은 조건문은 조건에 따른 수행코드가 다를뿐더러 조건의 수가 유동적이기에 추출하기에 적합한 구문이다.
-   * 함수로 만들때 함수가 수행하는 일을 함수명으로 명시한다.
-   * 함수의 반환값을 정의하는 변수명을 result로 통일하여 쉽게 해당 변수의 역할을 알수 있게 하자.
-   * 변수명을 지을때 부정관사(a/an)을 뢀용하자.
-   * */
   function amountFor(aPerformance, play){
     let result = 0;
     switch(play.type){
@@ -74,4 +75,3 @@ function statement(invoice, plays){
   }
 }
 
-console.log('original and refactoring statement is', rawStatement(invoices, plays) === statement(invoices, plays) ? 'same' : 'different')

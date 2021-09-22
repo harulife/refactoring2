@@ -1,14 +1,11 @@
-const plays = require('./plays.json');
-const invoices = require('./invoices.json');
-const { statement: rawStatement } = require('./0. raw');
-
+const plays = require('../plays.json');
+const invoices = require('../invoices.json');
 /**
  * 단계 쪼개기
  * 1단계 {createStatementData} - 데이터 처리
  * 2단계 {renderPlainText} - 데이터 포맷팅 & 출력
  * 중간 다리 구조로 result{} 로 얕은 복사 및 참조 처리
- *
- * */
+ */
 function createStatementData(invoice, plays){
   const result = {};
   result.customer = invoice.customer;
@@ -87,6 +84,3 @@ function renderPlainText(data){
       .format(aNumber/100);
   }
 }
-
-
-console.log('original and refactoring statement is', rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)) ? 'same' : 'different')

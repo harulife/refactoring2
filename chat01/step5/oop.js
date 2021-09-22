@@ -1,6 +1,7 @@
-const plays = require('./plays.json');
-const invoices = require('./invoices.json');
-const { statement: rawStatement } = require('./0. raw');
+const plays = require('../plays.json');
+const invoices = require('../invoices.json');
+const TragedyCalculator = require('./calculator/TragedyCalculator')
+const ComedyCalculator = require('./calculator/ComedyCalculator')
 
 function createPerformanceCalculator(aPerformance, play){
   switch(play.type){
@@ -10,46 +11,6 @@ function createPerformanceCalculator(aPerformance, play){
       return new ComedyCalculator(aPerformance, play)
     default:
       throw new Error('알수 없는 장르: ', play.type)
-  }
-}
-
-class PerformanceCalculator{
-  constructor(aPerformance, play) {
-    this.performance = aPerformance;
-    this.play = play;
-  }
-
-  get amount(){
-    throw new Error('subclass responsibility')
-  }
-
-  get volumeCredits(){
-    return Math.max(this.performance.audience - 30, 0)
-  }
-}
-
-class TragedyCalculator extends PerformanceCalculator{
-  get amount(){
-    let result = 40000;
-    if(this.performance.audience > 30){
-      result += 1000 * (this.performance.audience - 30);
-    }
-    return result
-  }
-}
-
-class ComedyCalculator extends PerformanceCalculator{
-  get amount(){
-    let result = 30000;
-    if(this.performance.audience > 20){
-      result += 10000 + 500 * (this.performance.audience - 20);
-    }
-    result += 300 * this.performance.audience;
-    return result;
-  }
-
-  get volumeCredits(){
-    return super.volumeCredits + Math.floor(this.performance.audience / 5)
   }
 }
 
@@ -129,10 +90,10 @@ function renderPlainText(data){
   function usd(aNumber){
     return new Intl.NumberFormat(
       'en-US',
-      { style: 'currency', currency: 'USD', minimumFractionDigits: 2})
+      { "style": 'currency', "currency": 'USD', "minimumFractionDigits": 2})
       .format(aNumber/100);
   }
 }
 
 
-console.log('original and refactoring statement is', rawStatement(invoices, plays) === renderPlainText(createStatementData(invoices, plays)) ? 'same' : 'different')
+console.log(renderPlainText(createStatementData(invoices, plays)))

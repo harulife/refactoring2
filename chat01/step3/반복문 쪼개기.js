@@ -1,7 +1,5 @@
-const plays = require('./plays.json');
-const invoices = require('./invoices.json');
-const { statement: rawStatement } = require('./0. raw');
-
+const plays = require('../plays.json');
+const invoices = require('../invoices.json');
 
 /**
  * 반복문 쪼개기
@@ -9,8 +7,7 @@ const { statement: rawStatement } = require('./0. raw');
  * 하나의 순회 과정을 쪼개어 여러 순회 과정으로 중복하게 되면 성능에 영향을 미치는건 사실이다.
  * 하지만 리펙토링에 대한 성능이슈는 체감상 많은 성능이슈를 주지않은 경우도 많을 뿐더러 만약 성능이 크게 떨어졌다면 리펙토링후 성능 개선을 진행하면 된다.
  * 결론적으로 "특별한 경우가 아니라면 성능 이슈, 일단 무시하라" 라는 조언
- *
- * */
+ */
 function totalVolumeCredits(){
   let result = 0;
   for(let perf of invoices.performances){
@@ -78,5 +75,3 @@ function statement(invoice, plays){
   result += `적립 포인트: ${totalVolumeCredits()}점\n`;
   return result;
 }
-
-console.log('original and refactoring statement is', rawStatement(invoices, plays) === statement(invoices, plays) ? 'same' : 'different')
